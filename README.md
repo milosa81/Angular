@@ -1,1 +1,1 @@
-# Angular
+# web shop project
