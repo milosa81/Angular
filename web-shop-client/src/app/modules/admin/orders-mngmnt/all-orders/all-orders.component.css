@@ -1,0 +1,9 @@
+.example-card {
+    max-width: 400px;
+  }
+  div{
+      display: inline-flex; 
+      min-height: 90vh;
+  }
+
+ 
