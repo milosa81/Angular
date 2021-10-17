@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/shared/models/Order';
 import { ApiOrdersService } from 'src/app/core/services/api-orders.service';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-order',
@@ -10,18 +10,21 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./add-order.component.css']
 })
 export class AddOrderComponent implements OnInit {
-  showTEMPLATE:Order;
+  showTEMPLATE: Order;
   invalidLogin: boolean = false;
-  message='';
-  constructor(private formBuilder: FormBuilder, private apiOrder: ApiOrdersService,private router: Router) { }
+  deliveryCntr = new FormControl(false);
+  orderstatusCntr = new FormControl(false);
+
+  message = '';
+  constructor(private formBuilder: FormBuilder, private apiOrder: ApiOrdersService, private router: Router) { }
   addForm;
 
   onSubmit() {
     if (this.addForm.invalid) {
       return;
     }
-     const order: Order = {
-      name: this.addForm.controls.prodname.value,
+    const order: Order = {
+      name: this.addForm.controls.name.value,
       phone: this.addForm.controls.phone.value,
       city: this.addForm.controls.city.value,
       address: this.addForm.controls.address.value,
@@ -34,15 +37,15 @@ export class AddOrderComponent implements OnInit {
     }
     /* console.log(order); */
     this.apiOrder.addOrder(order).subscribe(data => {
-      this.message='New order was added into list'
+      this.message = 'New order was added into list'
       console.log(data);
       this.addForm.reset();
-    }); 
-   
+    });
   }
-goBack(){
-  this.router.navigate([`administrator/adminorder/allorder`]);
-}
+
+  goBack() {
+    this.router.navigate([`administrator/adminorder/allorders`]);
+  }
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
@@ -52,13 +55,13 @@ goBack(){
       address: ['', Validators.required],
       email: ['', Validators.required],
       sum: [0, Validators.required],
-      delivery: [false, Validators.required],
-      orderstatus: [false, Validators.required],
-      wishes: '',
-      notes: '',
+      delivery: ['', Validators.required],
+      orderstatus: ['', Validators.required],
+      wishes: ['', Validators.required],
+      notes: ['', Validators.required],
     });
-    
-    this.showTEMPLATE=this.addForm;
-    this.message='';
+
+    this.showTEMPLATE = this.addForm;
+    this.message = '';
   }
 }
