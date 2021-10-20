@@ -17,3 +17,13 @@ mat-sidenav.adminmenu  {
     width: 200px;
     color: purple;
 }
+
+mat-sidenav.usermenu a{
+    color: white;
+}
+mat-sidenav.usermenu a:hover{
+background-color: rgba(255, 255, 0, 0.452);}
+
+mat-sidenav.adminmenu a:hover{
+background-color: rgba(255, 0, 0, 0.281);}
+
